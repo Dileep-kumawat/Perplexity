@@ -1,29 +1,14 @@
 /* Login.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-:root {
-    --primary: #3d87f5;
-    --primary-hover: #316dc5;
-    --bg-color: #0a0a0c;
-    --text-main: #e2e8f0;
-    --text-muted: #94a3b8;
-    --text-label: #cbd5e1;
-    --text-dark: #475569;
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --input-bg: rgba(255, 255, 255, 0.05);
-    --input-border: rgba(255, 255, 255, 0.1);
-}
 
 body {
     margin: 0;
-    background-color: var(--bg-color);
-    color: var(--text-main);
+    background-color: var(--surface);
+    color: var(--on-surface);
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
 }
 
-/* Background Ambient Glow */
+/* ── Background Ambient Glow ── */
 .bg-glow {
     position: fixed;
     top: 50%;
@@ -31,12 +16,18 @@ body {
     transform: translate(-50%, -50%);
     width: 800px;
     height: 800px;
-    background: radial-gradient(circle, rgba(30, 27, 75, 0.4) 0%, rgba(10, 10, 12, 0) 70%);
+    /* Dual-tone glow matching hero blobs in home.css */
+    background: radial-gradient(
+        circle,
+        rgba(143, 245, 255, 0.07) 0%,
+        rgba(191, 129, 255, 0.05) 40%,
+        rgba(14, 14, 14, 0) 70%
+    );
     z-index: -1;
     pointer-events: none;
 }
 
-/* Layout */
+/* ── Layout ── */
 .login-page {
     display: flex;
     align-items: center;
@@ -51,13 +42,15 @@ body {
     max-width: 28rem;
 }
 
-/* Glassmorphic card effect */
+/* ── Glassmorphic Card ── */
 .glass-card {
     background: var(--glass-bg);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(143, 245, 255, 0.04) inset;
     border-radius: 12px;
     padding: 2.5rem;
     box-sizing: border-box;
@@ -69,7 +62,7 @@ body {
     }
 }
 
-/* Header Section */
+/* ── Header Section ── */
 .header-section {
     text-align: center;
     margin-bottom: 2rem;
@@ -81,7 +74,8 @@ body {
     justify-content: center;
     width: 3rem;
     height: 3rem;
-    background-color: rgba(61, 135, 245, 0.1);
+    /* Teal tint matching --primary */
+    background-color: rgba(143, 245, 255, 0.1);
     border-radius: 0.5rem;
     margin-bottom: 1rem;
 }
@@ -90,13 +84,14 @@ body {
     width: 2rem;
     height: 2rem;
     color: var(--primary);
+    filter: drop-shadow(0 0 8px rgba(143, 245, 255, 0.5));
 }
 
 .header-title {
     font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: -0.025em;
-    color: #ffffff;
+    color: var(--on-surface);
     margin: 0 0 0.5rem 0;
 }
 
@@ -106,12 +101,11 @@ body {
     margin: 0;
 }
 
-/* Error Message Styling */
+/* ── Error Message ── */
 .error-message {
-    background-color: rgba(239, 68, 68, 0.1);
-    /* Soft red background */
-    border: 1px solid rgba(239, 68, 68, 0.2);
-    color: #f87171;
+    background-color: var(--error-container);
+    border: 1px solid rgba(255, 113, 108, 0.25);
+    color: var(--error);
     padding: 0.75rem 1rem;
     border-radius: 12px;
     margin-bottom: 1.5rem;
@@ -133,14 +127,13 @@ body {
         opacity: 0;
         transform: translateY(-10px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* Form Styles */
+/* ── Form Styles ── */
 .login-form {
     display: flex;
     flex-direction: column;
@@ -162,7 +155,7 @@ body {
     border: 1px solid var(--input-border);
     border-radius: 12px;
     padding: 0.625rem 1rem;
-    color: #ffffff;
+    color: var(--on-surface);
     font-family: inherit;
     font-size: 1rem;
     box-sizing: border-box;
@@ -174,29 +167,36 @@ body {
 }
 
 .form-input:focus {
-    box-shadow: 0 0 15px rgba(61, 135, 245, 0.3);
-    border-color: var(--primary);
+    /* Cyan glow matching home.css search bar focus */
+    box-shadow: 0 0 0 2px var(--primary-dim), 0 0 15px rgba(143, 245, 255, 0.2);
+    border-color: var(--primary-dim);
     outline: none;
 }
 
+/* ── Submit Button ── */
 .submit-btn {
     width: 100%;
     padding: 0.75rem 1rem;
     margin-top: 0.5rem;
     background-color: var(--primary);
-    color: #ffffff;
-    font-weight: 600;
+    color: var(--on-primary);
+    font-weight: 700;
     font-size: 1rem;
     font-family: inherit;
     border: none;
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 10px 15px -3px rgba(61, 135, 245, 0.2), 0 4px 6px -2px rgba(61, 135, 245, 0.1);
+    /* Cyan shadow matching home.css .btn-execute */
+    box-shadow:
+        0 10px 15px -3px rgba(143, 245, 255, 0.15),
+        0 4px 6px -2px rgba(143, 245, 255, 0.08);
 }
 
 .submit-btn:hover:not(:disabled) {
-    background-color: var(--primary-hover);
+    background-color: var(--primary-fixed);
+    box-shadow: 0 0 20px rgba(143, 245, 255, 0.35);
+    transform: scale(1.01);
 }
 
 .submit-btn:disabled {
@@ -204,7 +204,7 @@ body {
     cursor: wait;
 }
 
-/* Card Footer */
+/* ── Card Footer ── */
 .card-footer {
     margin-top: 2rem;
     text-align: center;
@@ -212,7 +212,7 @@ body {
 }
 
 .card-footer span {
-    color: #64748b;
+    color: var(--outline);
 }
 
 .link-primary {
@@ -224,10 +224,10 @@ body {
 }
 
 .link-primary:hover {
-    color: var(--primary-hover);
+    color: var(--primary-dim);
 }
 
-/* Page Footer Links */
+/* ── Page Footer Links ── */
 .page-footer {
     margin-top: 2rem;
     text-align: center;
@@ -243,7 +243,7 @@ body {
 }
 
 .page-footer a:hover {
-    color: var(--text-muted);
+    color: var(--primary);
 }
 
 .separator {

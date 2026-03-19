@@ -1,49 +1,41 @@
 /* Register.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-:root {
-    --primary: #3d87f5;
-    --primary-dark: #2563eb;
-    --bg-color: #0a0a0c;
-    --text-main: #e2e8f0;
-    --text-muted: #94a3b8;
-    --text-dark: #475569;
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --input-bg: rgba(255, 255, 255, 0.05);
-}
+/* @import url('./variables.css'); */
 
 body {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    color: var(--text-main);
-    background-color: var(--bg-color);
+    color: var(--on-surface);
+    background-color: var(--surface);
+    /* Dual-tone ambient gradient matching home.css hero blobs */
     background-image:
-        radial-gradient(at 0% 0%, rgba(61, 135, 245, 0.05) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(61, 135, 245, 0.03) 0px, transparent 50%);
+        radial-gradient(at 0% 0%,   rgba(143, 245, 255, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(191, 129, 255, 0.04) 0px, transparent 50%);
     min-height: 100vh;
 }
 
-/* Animations */
+/* ── Animations ── */
 @keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-20px);
-    }
-
-    100% {
-        transform: translateY(0px);
-    }
+    0%   { transform: translateY(0px);   }
+    50%  { transform: translateY(-20px); }
+    100% { transform: translateY(0px);   }
 }
 
 .animate-float {
     animation: float 6s ease-in-out infinite;
 }
 
-/* Layout */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Layout ── */
 .register-page {
     display: flex;
     align-items: center;
@@ -58,14 +50,15 @@ body {
     flex-direction: column;
     width: 100%;
     max-width: 64rem;
-    /* 1024px */
     border-radius: 12px;
     overflow: hidden;
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(143, 245, 255, 0.04) inset;
 }
 
 @media (min-width: 768px) {
@@ -74,11 +67,12 @@ body {
     }
 }
 
-/* Left Panel - Visuals */
+/* ── Left Panel – Visuals ── */
 .visual-panel {
     display: none;
     position: relative;
-    background-color: rgba(61, 135, 245, 0.05);
+    /* Teal-tinted panel, matching .visual-panel concept in home.css */
+    background-color: rgba(143, 245, 255, 0.04);
     align-items: center;
     justify-content: center;
     padding: 3rem;
@@ -93,24 +87,21 @@ body {
     }
 }
 
+/* Decorative blurs — primary (teal) top-left, secondary (purple) bottom-right */
 .decorative-blur-top {
     position: absolute;
-    top: -10%;
-    left: -10%;
-    width: 16rem;
-    height: 16rem;
-    background-color: rgba(61, 135, 245, 0.2);
+    top: -10%; left: -10%;
+    width: 16rem; height: 16rem;
+    background-color: rgba(143, 245, 255, 0.18);
     border-radius: 50%;
     filter: blur(80px);
 }
 
 .decorative-blur-bottom {
     position: absolute;
-    bottom: -10%;
-    right: -10%;
-    width: 16rem;
-    height: 16rem;
-    background-color: rgba(61, 135, 245, 0.1);
+    bottom: -10%; right: -10%;
+    width: 16rem; height: 16rem;
+    background-color: rgba(191, 129, 255, 0.12);
     border-radius: 50%;
     filter: blur(80px);
 }
@@ -127,24 +118,26 @@ body {
     margin: 0 auto 2rem auto;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid rgba(61, 135, 245, 0.3);
-    box-shadow: 0 0 30px rgba(61, 135, 245, 0.3);
+    border: 2px solid rgba(143, 245, 255, 0.30);
+    box-shadow: 0 0 30px rgba(143, 245, 255, 0.25);
 }
 
 .visual-title {
     font-size: 1.875rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: #ffffff;
+    color: var(--on-surface);
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 .visual-desc {
-    color: var(--text-muted);
+    color: var(--on-surface-variant);
     max-width: 20rem;
     margin: 0 auto;
     line-height: 1.6;
 }
 
+/* Subtle dot-grid overlay — same opacity as home.css glass-panel */
 .grid-overlay {
     position: absolute;
     inset: 0;
@@ -154,12 +147,11 @@ body {
     background-size: 30px 30px;
 }
 
-/* Error message styling */
-
+/* ── Error Message ── */
 .error-message {
-    background-color: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.2);
-    color: #f87171;
+    background-color: var(--error-container);
+    border: 1px solid rgba(255, 113, 108, 0.25);
+    color: var(--error);
     padding: 0.75rem 1rem;
     border-radius: 12px;
     margin-bottom: 1.5rem;
@@ -176,23 +168,7 @@ body {
     flex-shrink: 0;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.submit-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-/* Right Panel - Form */
+/* ── Right Panel – Form ── */
 .form-panel {
     width: 100%;
     padding: 2rem;
@@ -216,16 +192,18 @@ body {
 .form-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--on-surface);
     margin: 0 0 0.5rem 0;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 .form-subtitle {
-    color: var(--text-muted);
+    color: var(--on-surface-variant);
     font-size: 0.875rem;
     margin: 0;
 }
 
+/* ── Form Fields ── */
 .register-form {
     display: flex;
     flex-direction: column;
@@ -241,7 +219,7 @@ body {
 .form-group label {
     font-size: 0.875rem;
     font-weight: 500;
-    color: #cbd5e1;
+    color: var(--text-label);
 }
 
 .form-input {
@@ -250,7 +228,7 @@ body {
     border: 1px solid var(--glass-border);
     border-radius: 12px;
     padding: 0.75rem 1rem;
-    color: #ffffff;
+    color: var(--on-surface);
     font-family: inherit;
     font-size: 1rem;
     outline: none;
@@ -263,11 +241,12 @@ body {
 }
 
 .form-input:focus {
-    box-shadow: 0 0 0 2px var(--primary);
+    /* Matches home.css search bar focus ring with cyan glow */
+    box-shadow: 0 0 0 2px var(--primary-dim), 0 0 15px rgba(143, 245, 255, 0.15);
     border-color: transparent;
 }
 
-/* Password Strength */
+/* ── Password Strength ── */
 .strength-container {
     padding-top: 0.5rem;
 }
@@ -277,7 +256,7 @@ body {
     gap: 0.25rem;
     height: 0.375rem;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.08);
     border-radius: 9999px;
     overflow: hidden;
 }
@@ -295,7 +274,7 @@ body {
     font-weight: 600;
 }
 
-/* Checkbox */
+/* ── Checkbox ── */
 .checkbox-group {
     display: flex;
     align-items: flex-start;
@@ -309,11 +288,12 @@ body {
     background-color: var(--input-bg);
     border: 1px solid var(--glass-border);
     cursor: pointer;
+    accent-color: var(--primary);
 }
 
 .checkbox-label {
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: var(--on-surface-variant);
     line-height: 1.5;
 }
 
@@ -324,34 +304,43 @@ body {
 }
 
 .link-primary:hover {
+    color: var(--primary-dim);
     text-decoration: underline;
 }
 
-/* Submit Button */
+/* ── Submit Button ── */
 .submit-btn {
     width: 100%;
     background-color: var(--primary);
-    color: #ffffff;
-    font-weight: 600;
+    color: var(--on-primary);
+    font-weight: 700;
     padding: 0.75rem;
     border-radius: 12px;
     border: none;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 10px 15px -3px rgba(61, 135, 245, 0.2);
+    /* Cyan glow matching home.css .btn-initialize-nav / .btn-execute */
+    box-shadow: 0 10px 15px -3px rgba(143, 245, 255, 0.15);
     font-family: inherit;
     font-size: 1rem;
 }
 
 .submit-btn:hover {
-    background-color: var(--primary-dark);
+    background-color: var(--primary-fixed);
+    box-shadow: 0 0 20px rgba(143, 245, 255, 0.35);
+    transform: scale(1.01);
 }
 
 .submit-btn:active {
     transform: scale(0.98);
 }
 
-/* Footer Links */
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ── Form Footer ── */
 .form-footer {
     margin-top: 2rem;
     padding-top: 1.5rem;
@@ -361,11 +350,17 @@ body {
 
 .form-footer p {
     font-size: 0.875rem;
-    color: var(--text-muted);
+    color: var(--on-surface-variant);
     margin: 0;
 }
 
 .form-footer a {
     font-weight: 500;
     margin-left: 0.25rem;
+    color: var(--primary);
+    transition: color 0.2s ease;
+}
+
+.form-footer a:hover {
+    color: var(--primary-dim);
 }
