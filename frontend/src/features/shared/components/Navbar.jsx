@@ -1,4 +1,4 @@
-const Navbar = () => {
+const Navbar = ({ user }) => {
   return (
     <nav className="topnav">
       <div>
@@ -11,8 +11,15 @@ const Navbar = () => {
         <a className="nav-link" href="#consensus">Consensus</a>
       </div>
       <div className="nav-actions">
-        <button className="btn-signin">Sign In</button>
-        <button className="btn-initialize-nav">Initialize</button>
+        {
+          user ?
+            <button className="btn-initialize-nav">Dashboard</button>
+            :
+            <>
+              <button className="btn-signin">Sign In</button>
+              <button className="btn-initialize-nav">Initialize</button>
+            </>
+        }
       </div>
     </nav>
   );

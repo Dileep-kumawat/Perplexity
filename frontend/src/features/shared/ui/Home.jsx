@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import '../styles/variables.css';
 import '../styles/home.css';
 
-
 import Navbar from '../components/Navbar';
 import HeroSection from '../components/HeroSection';
 import FeaturesSection from '../components/FeaturesSection';
@@ -10,8 +9,16 @@ import ProductShowcase from '../components/ProductShowcase';
 import ConsensusSection from '../components/ConsensusSection';
 import CTASection from '../components/CTASection';
 import Footer from '../components/Footer';
+import { useSelector } from 'react-redux';
+import useHomeAnimations from '../hooks/useHomeAnimations';
 
 const Home = () => {
+
+    const user = useSelector(state => state.auth.user);
+
+    // GSAP scroll-driven animations
+    useHomeAnimations();
+
     useEffect(() => {
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-link');
@@ -53,13 +60,13 @@ const Home = () => {
 
     return (
         <>
-            <Navbar />
+            <Navbar user={user} />
             <main>
                 <HeroSection />
                 <FeaturesSection />
                 <ProductShowcase />
                 <ConsensusSection />
-                <CTASection />
+                <CTASection user={user} />
             </main>
             <Footer />
         </>

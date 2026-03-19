@@ -18,7 +18,7 @@ export async function login(payload) {
 }
 
 export async function getMe() {
-    const res = await api.post('/api/auth/get-me');
+    const res = await api.get('/api/auth/get-me');
 
     return res;
 }
