@@ -1,5 +1,5 @@
 // ChatInput.jsx
-import React, { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import '../styles/ChatInput.css';
 
 export default function ChatInput({ onSend, placeholder = 'Start a new conversation...' }) {

@@ -208,13 +208,13 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-transform: capitalize;
 }
 
 .sidebar__user-role {
   font-family: var(--font-headline);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
+  font-size: .6rem;
+  text-transform: lowercase;
   color: var(--on-surface-variant);
 }
 

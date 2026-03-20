@@ -1,11 +1,13 @@
 // Chat.jsx
 // Root shell composing Sidebar, TopBar, NewChat / message canvas, and ChatInput.
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Sidebar from '../components/Sidebar';
 import TopBar from '../components/TopBar';
 import NewChat from '../components/NewChat';
 import ChatInput from '../components/ChatInput';
 import '../styles/Chat.css';
+import { useSelector } from 'react-redux';
 
 /* ── uid helper ── */
 let _uid = 0;
@@ -55,7 +57,7 @@ function UserMessage({ text, time }) {
       {/* Avatar — profile image */}
       <div className="chat__avatar-user">
         <img
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSWAyZwpw7DFHwo-pKO4MxF03jYA3E6sBHC--GsatG4N43OrDexTBDC2J4kcT8IZyBMNqiC9_FATb1K5KfBYnuzv90CUKNrMw3nRz0q-2AKBUwAZXGtLWZ6icx2q5a3XuoYrHwYZQ4FkW381hV2PyrOeBYMT5yahqtJROu-FUU1vuaESdqrr0RpEmaQd7jZ5ejnZS8P-VC8eBTp8EtxES7dab6bTiybFwI2xrNRsSvlddDMVFUKJEQrgUgZJrwItFF6y43SmL4n4A"
+          src="default_avatar.jpg"
           alt="Alex Rivera"
         />
       </div>
@@ -103,8 +105,10 @@ const SEED_MESSAGES = [
 export default function Chat() {
   const [messages, setMessages] = useState(SEED_MESSAGES);
   const [isTyping, setIsTyping] = useState(false);
-  const [showNew, setShowNew]   = useState(false);
+  const [showNew, setShowNew] = useState(false);
   const bottomRef = useRef(null);
+
+  const user = useSelector(state => state.auth.user);
 
   const hasMessages = messages.length > 0 && !showNew;
 
@@ -149,7 +153,7 @@ export default function Chat() {
       </div>
 
       {/* Sidebar */}
-      <Sidebar onNewChat={handleNewChat} />
+      <Sidebar onNewChat={handleNewChat} user={user} />
 
       {/* Right side */}
       <div className="chat__main">

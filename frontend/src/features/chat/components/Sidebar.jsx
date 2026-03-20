@@ -29,7 +29,7 @@ const SESSIONS = [
   },
 ];
 
-export default function Sidebar({ onNewChat }) {
+export default function Sidebar({ onNewChat, user }) {
 
   const { handleLogout } = useAuth();
   const navigate = useNavigate();
@@ -75,14 +75,14 @@ export default function Sidebar({ onNewChat }) {
           <div className="sidebar__user-avatar-wrap">
             <img
               className="sidebar__user-avatar"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG4l0PDiIA7z2otMkemAMJXQnjr-w_Be6VmyfSnfr1zDA_vHK5hH5MeyI0KJtONaPWsWktJzXXYbAejG_Zv2JNwW7MTt82kU2B3lQVcGEqpFPHB6vqH_67v86BOQvoeCiixlOaEQ1HQoqk1on_IDi33F2ODMUtlD2QRIU7HAcm48cOpAsRw5dVZDIL4OhZrjun5eL94gj1CKe6QIxLn6plNRtzzaMqK553GYMdRwPeRwPU-n6ie3GrMrpmzJBjALcX1rnA3xW9X_Q"
-              alt="Alex Rivera"
+              src="default_avatar.jpg"
+              alt={user.username}
             />
             <div className="sidebar__user-online" />
           </div>
           <div className="sidebar__user-info">
-            <p className="sidebar__user-name">Alex Rivera</p>
-            <p className="sidebar__user-role">Intelligence Ops</p>
+            <p className="sidebar__user-name">{user.username}</p>
+            <p className="sidebar__user-role">{user.email}</p>
           </div>
           <button
             className="sidebar__logout-btn" aria-label="Logout"

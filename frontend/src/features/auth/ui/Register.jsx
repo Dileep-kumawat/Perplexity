@@ -67,7 +67,7 @@ const Register = () => {
         const result = await handleRegister(formData);
 
         if (result?.success) {
-            navigate('/dashboard');
+            navigate('/login');
         }
     };
 
