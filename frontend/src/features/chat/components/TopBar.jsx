@@ -4,19 +4,30 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const NAV_ITEMS = [
-  { label: 'Home', href: '/', active: false },
-  { label: 'Chat', href: '#', active: true },
+  { label: 'Home', href: '/',  active: false },
+  { label: 'Chat', href: '#',  active: true  },
 ];
 
-export default function TopBar() {
-  const chats = useSelector((state) => state.chat.chats);
+export default function TopBar({ onMenuToggle }) {
+  const chats         = useSelector((state) => state.chat.chats);
   const currentChatId = useSelector((state) => state.chat.currentChatId);
-  const isLoading = useSelector((state) => state.chat.isLoading);
+  const isLoading     = useSelector((state) => state.chat.isLoading);
 
   const chatTitle = currentChatId ? (chats[currentChatId]?.title ?? null) : null;
 
   return (
     <header className="topbar">
+
+      {/* Hamburger — visible only on mobile via CSS */}
+      <button
+        className="topbar__menu-btn"
+        onClick={onMenuToggle}
+        aria-label="Toggle sidebar menu"
+        aria-expanded={undefined /* controlled by CSS visibility */}
+      >
+        <span className="material-symbols-outlined">menu</span>
+      </button>
+
       {/* Left nav */}
       <nav className="topbar__nav">
         {NAV_ITEMS.map(({ label, href, active }) => (
@@ -61,6 +72,7 @@ export default function TopBar() {
           </div>
         )}
       </div>
+
     </header>
   );
 }

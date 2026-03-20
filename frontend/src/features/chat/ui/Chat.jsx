@@ -1,7 +1,7 @@
 // Chat.jsx
 // Root shell composing Sidebar, TopBar, NewChat / message canvas, and ChatInput.
 
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import TopBar from '../components/TopBar';
 import NewChat from '../components/NewChat';
@@ -104,6 +104,33 @@ function ErrorBanner({ message, onDismiss }) {
 export default function Chat() {
   const bottomRef = useRef(null);
 
+  // ── Sidebar open/close state (for mobile drawer) ─────────────────────────
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const openSidebar = useCallback(() => setSidebarOpen(true), []);
+  const closeSidebar = useCallback(() => setSidebarOpen(false), []);
+  const toggleSidebar = useCallback(() => setSidebarOpen((v) => !v), []);
+
+  // Lock body scroll when sidebar drawer is open on mobile
+  useEffect(() => {
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    if (isMobile && sidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [sidebarOpen]);
+
+  // Close sidebar on resize to desktop (avoids stale open state)
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth > 767) setSidebarOpen(false);
+    }
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // ── Redux state ──────────────────────────────────────────
   const user = useSelector((state) => state.auth.user);
   const chats = useSelector((state) => state.chat.chats);
@@ -130,7 +157,6 @@ export default function Chat() {
 
   // ── Handlers ─────────────────────────────────────────────
   const handleNewChat = useCallback(() => {
-    // Clearing currentChatId shows the NewChat welcome screen
     handleOpenChat(null, chats);
   }, [chats, handleOpenChat]);
 
@@ -149,12 +175,20 @@ export default function Chat() {
         <div className="chat__bg-glow-bl" />
       </div>
 
-      {/* Sidebar */}
-      <Sidebar onNewChat={handleNewChat} onOpenChat={handleOpenChat} user={user} chats={chats} />
+      {/* Sidebar — receives isOpen + onClose for mobile drawer */}
+      <Sidebar
+        onNewChat={handleNewChat}
+        onOpenChat={handleOpenChat}
+        user={user}
+        chats={chats}
+        isOpen={sidebarOpen}
+        onClose={closeSidebar}
+      />
 
       {/* Right side */}
       <div className="chat__main">
-        <TopBar />
+        {/* TopBar — receives onMenuToggle for hamburger button */}
+        <TopBar onMenuToggle={toggleSidebar} />
 
         {/* Error banner */}
         {error && (

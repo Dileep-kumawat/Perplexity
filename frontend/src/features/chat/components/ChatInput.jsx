@@ -28,7 +28,9 @@ export default function ChatInput({
   const handleInput = useCallback((e) => {
     setValue(e.target.value);
     e.target.style.height = 'auto';
-    e.target.style.height = `${e.target.scrollHeight}px`;
+    // Cap the auto-grow height so it doesn't consume too much screen on mobile
+    const maxHeight = window.innerWidth < 768 ? 120 : 200;
+    e.target.style.height = `${Math.min(e.target.scrollHeight, maxHeight)}px`;
   }, []);
 
   const canSend = !!value.trim() && !disabled;
@@ -73,7 +75,6 @@ export default function ChatInput({
               disabled={!canSend}
               aria-label="Send message"
             >
-              {/* Swap icon to a spinner while waiting for the AI */}
               {disabled
                 ? <span className="material-symbols-outlined chat-input__spinner">progress_activity</span>
                 : <span className="material-symbols-outlined">send</span>

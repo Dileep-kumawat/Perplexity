@@ -118,7 +118,7 @@
 
   /* ── Z-Index ── */
   --z-bg:      -1;
-  --z-sidebar: 20;
+  --z-sidebar: 50;
   --z-topbar:  30;
   --z-input:   30;
 }

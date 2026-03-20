@@ -30,6 +30,7 @@
   pointer-events: none;
   animation: particle-pulse 4s ease-in-out infinite;
 }
+
 .new-chat__particle--1 { top: 20%; right: 10%; width: 4px; height: 4px; background: var(--primary);   filter: blur(1px); opacity: 0.3;  animation-delay: 0s;    }
 .new-chat__particle--2 { bottom: 40%; left: 20%; width: 8px; height: 8px; background: var(--secondary); filter: blur(2px); opacity: 0.2;  animation-delay: 1.5s;  }
 .new-chat__particle--3 { top: 50%; left: 5%;    width: 4px; height: 4px; background: var(--tertiary);  filter: blur(1px); opacity: 0.4;  animation-delay: 0.8s;  }
@@ -45,6 +46,7 @@
 .new-chat__hero {
   text-align: center;
   max-width: 640px;
+  width: 100%;
   animation: hero-fade-in 0.7s ease both;
 }
 
@@ -115,7 +117,7 @@
 /* ── Headline ── */
 .new-chat__headline {
   font-family: var(--font-headline);
-  font-size: clamp(32px, 5vw, 48px);
+  font-size: clamp(28px, 5vw, 48px);
   font-weight: 700;
   color: var(--on-surface);
   letter-spacing: -0.02em;
@@ -166,6 +168,8 @@
   cursor: pointer;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  /* Better touch targets */
+  min-height: 44px;
 }
 
 .new-chat__chip .material-symbols-outlined {
@@ -178,4 +182,110 @@
   color: var(--on-surface);
   background: rgba(143, 245, 255, 0.05);
   transform: translateY(-2px);
+}
+
+.new-chat__chip:active {
+  transform: translateY(0);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Tablet  (768px – 1024px)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media (max-width: 1024px) {
+  .new-chat {
+    padding: var(--sp-6);
+    padding-bottom: 140px;
+  }
+
+  .new-chat__subtitle {
+    font-size: 16px;
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Mobile  (< 768px)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media (max-width: 767px) {
+  .new-chat {
+    padding: var(--sp-6) var(--sp-4);
+    padding-bottom: 130px;
+    justify-content: flex-start;
+    padding-top: var(--sp-10);
+  }
+
+  .new-chat__icon-cluster {
+    margin-bottom: var(--sp-6);
+  }
+
+  .new-chat__icon-ring {
+    width: 72px;
+    height: 72px;
+  }
+
+  .new-chat__icon-ring .material-symbols-outlined {
+    font-size: 36px;
+  }
+
+  .new-chat__icon-glow {
+    filter: blur(32px);
+  }
+
+  .new-chat__headline {
+    font-size: clamp(24px, 7vw, 36px);
+    margin-bottom: var(--sp-3);
+  }
+
+  .new-chat__subtitle {
+    font-size: 15px;
+    max-width: 100%;
+  }
+
+  .new-chat__suggestions {
+    margin-top: var(--sp-6);
+    gap: var(--sp-2);
+  }
+
+  .new-chat__chip {
+    font-size: 12px;
+    padding: var(--sp-2) var(--sp-3);
+  }
+
+  /* Reduce orbital sizes on mobile */
+  .new-chat__orbital--2 {
+    display: none;
+  }
+
+  /* Fewer particles on mobile for perf */
+  .new-chat__particle--2,
+  .new-chat__particle--4 {
+    display: none;
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Extra small  (< 400px)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media (max-width: 399px) {
+  .new-chat {
+    padding: var(--sp-4) var(--sp-3);
+    padding-bottom: 120px;
+  }
+
+  .new-chat__icon-ring {
+    width: 60px;
+    height: 60px;
+  }
+
+  .new-chat__icon-ring .material-symbols-outlined {
+    font-size: 28px;
+  }
+
+  .new-chat__suggestions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .new-chat__chip {
+    justify-content: center;
+  }
 }

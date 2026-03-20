@@ -16,6 +16,50 @@
   position: relative;
   z-index: var(--z-sidebar);
   flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Mobile overlay ── */
+.sidebar__overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: calc(var(--z-sidebar) - 1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar__overlay--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Mobile close button ── */
+.sidebar__close-btn {
+  display: none;
+  position: absolute;
+  top: var(--sp-4);
+  right: var(--sp-4);
+  padding: var(--sp-2);
+  border-radius: var(--radius-md);
+  color: var(--on-surface-variant);
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+  z-index: 1;
+}
+
+.sidebar__close-btn:hover {
+  color: var(--on-surface);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sidebar__close-btn .material-symbols-outlined {
+  font-size: 20px;
 }
 
 /* ── Brand ── */
@@ -138,7 +182,6 @@
   font-size: 12px;
   color: var(--on-surface-variant);
   padding-left: 28px;
-  /* align under icon */
   opacity: 0.6;
 }
 
@@ -152,7 +195,6 @@
   align-items: center;
   justify-content: space-between;
   padding-left: 28px;
-  /* align under icon */
 }
 
 .sidebar__session-meta .sidebar__session-time {
@@ -292,4 +334,66 @@
 
 .sidebar__logout-btn .material-symbols-outlined {
   font-size: 20px;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Tablet  (768px – 1024px)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 260px;
+  }
+
+  .sidebar__brand {
+    padding: 0 var(--sp-6);
+    margin-bottom: var(--sp-8);
+  }
+
+  .sidebar__brand-name {
+    font-size: 20px;
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Mobile  (< 768px)
+   Sidebar becomes a fixed drawer
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media (max-width: 767px) {
+  .sidebar__overlay {
+    display: block;
+  }
+
+  .sidebar__close-btn {
+    display: flex;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100dvh;
+    width: min(300px, 85vw);
+    transform: translateX(-110%);
+    /* stay off-screen even with shadow */
+    box-shadow: none;
+    z-index: var(--z-sidebar);
+    padding-top: var(--sp-6);
+  }
+
+  .sidebar--open {
+    transform: translateX(0);
+    box-shadow: 8px 0 48px rgba(0, 0, 0, 0.6);
+  }
+
+  .sidebar__brand {
+    padding: 0 var(--sp-6);
+    padding-right: 48px;
+    /* avoid overlap with close btn */
+    margin-bottom: var(--sp-6);
+  }
+
+  .sidebar__new-chat {
+    margin-bottom: var(--sp-6);
+  }
 }

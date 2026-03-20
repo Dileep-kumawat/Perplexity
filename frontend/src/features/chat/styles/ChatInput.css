@@ -10,6 +10,7 @@
   background: linear-gradient(to top, var(--background) 60%, transparent);
   pointer-events: none;
   z-index: var(--z-input);
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .chat-input__inner {
@@ -67,6 +68,8 @@
   caret-color: var(--primary);
   border: none;
   outline: none;
+  /* Prevent iOS zoom on focus */
+  font-size: max(14px, 16px);
 }
 
 .chat-input__field::placeholder {
@@ -113,13 +116,8 @@
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-.chat-input__send-btn:hover {
-  transform: scale(1.05);
-}
-
-.chat-input__send-btn:active {
-  transform: scale(0.95);
-}
+.chat-input__send-btn:hover  { transform: scale(1.05); }
+.chat-input__send-btn:active { transform: scale(0.95); }
 
 .chat-input__send-btn:disabled {
   opacity: 0.5;
@@ -163,11 +161,62 @@
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Tablet  (768px – 1024px)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media (max-width: 1024px) {
+  .chat-input {
+    left: 260px;
+    padding: var(--sp-6);
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Mobile  (< 768px)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media (max-width: 767px) {
+  .chat-input {
+    left: 0;
+    padding: var(--sp-4) var(--sp-4) calc(var(--sp-4) + env(safe-area-inset-bottom));
   }
 
-  to {
-    transform: rotate(360deg);
+  .chat-input__field {
+    /* Reset font-size to actual value for mobile layout calculations */
+    font-size: 16px;
+    padding: var(--sp-3) var(--sp-2);
+  }
+
+  .chat-input__send-btn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .chat-input__disclaimer {
+    font-size: 9px;
+    margin-top: var(--sp-3);
+    letter-spacing: 0.05em;
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Extra small  (< 400px)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media (max-width: 399px) {
+  .chat-input {
+    padding: var(--sp-3) var(--sp-3) calc(var(--sp-3) + env(safe-area-inset-bottom));
+  }
+
+  /* Hide attach & mic to save space on tiny screens */
+  .chat-input__attach-btn,
+  .chat-input__mic-btn {
+    display: none;
+  }
+
+  .chat-input__disclaimer {
+    display: none;
   }
 }
